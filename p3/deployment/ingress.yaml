@@ -12,6 +12,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: playground-service
+            name: playground
             port:
               number: 8888
