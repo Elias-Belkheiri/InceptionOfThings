@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-username/your-repo
+    repoURL: https://github.com/Elias-Belkheiri/InceptionOfThings
     targetRevision: HEAD
-    path: path/to/deployment
+    path: p3/deployment
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
