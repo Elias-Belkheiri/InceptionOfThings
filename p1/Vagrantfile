@@ -1,0 +1,37 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "master" do |master|
+      master.vm.box = "spox/ubuntu-arm" 
+      master.vm.box_version = "1.0.0"
+      master.vm.hostname = 'master'
+
+      master.vm.network :private_network, ip: "192.168.56.110"
+      master.vm.provision "shell", path: "scripts/server.sh"
+
+      master.vm.provider "vmware_desktop" do |v|
+          v.allowlist_verified = true
+          v.gui = false
+          v.vmx["memsize"] = "1024"
+          v.vmx["numvcpus"] = "1"
+    end
+  end
+
+  config.vm.define "slave" do |slave|
+      slave.vm.box = "spox/ubuntu-arm" 
+      slave.vm.box_version = "1.0.0"
+      slave.vm.hostname = 'slave'
+
+      slave.vm.network :private_network, ip: "192.168.56.111"
+      slave.vm.provision "shell", path: "scripts/agent.sh"
+
+      slave.vm.provider "vmware_desktop" do |v|
+          v.allowlist_verified = true
+          v.gui = false
+          v.vmx["memsize"] = "1024"
+          v.vmx["numvcpus"] = "1"
+    end
+  end
+end
+
+# K10bc809ef48e146159fd03915e1437ad7e95eddd69a0ec1b5f93dcf4f50d659723::server:0a5ba076fa3b4a2b1ee45c812b5d5e34
+
+# curl -sfL https://get.k3s.io | K3S_URL=https://192.168.56.110:6443 K3S_TOKEN=K10bc809ef48e146159fd03915e1437ad7e95eddd69a0ec1b5f93dcf4f50d659723::server:0a5ba076fa3b4a2b1ee45c812b5d5e34 sh -
