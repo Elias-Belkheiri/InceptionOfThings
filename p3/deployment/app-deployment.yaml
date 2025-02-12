@@ -14,7 +14,7 @@ spec:
         app: wil-playground
     spec:
       containers:
-      - name: wil-playground
-        image: wil42/playground:v1  # Change between v1 and v2
-        ports:
-        - containerPort: 8888
+        - name: wil-playground
+          image: wil42/playground:v2 # Change between v1 and v2
+          ports:
+            - containerPort: 8888
