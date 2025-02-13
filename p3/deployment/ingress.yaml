@@ -14,4 +14,4 @@ spec:
           service:
             name: playground-service
             port:
-              number: 8888
+              number: 80

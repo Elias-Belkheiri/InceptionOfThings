@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wil-playground
+  name: argocd-app
   namespace: argocd
 spec:
-  project: default
+  project: development
   source:
     repoURL: https://github.com/Elias-Belkheiri/InceptionOfThings
     targetRevision: HEAD
@@ -14,10 +14,7 @@ spec:
     namespace: dev
   syncPolicy:
     automated:
-      prune: true  # Delete resources that are no longer in Git
-      selfHeal: true  # Revert manual changes to match Git state
-      allowEmpty: false  # Prevent deletion of all resources
+      selfHeal: true
+      prune: true
     syncOptions:
-      - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
+    - CreateNamespace=true

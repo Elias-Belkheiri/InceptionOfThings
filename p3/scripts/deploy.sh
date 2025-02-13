@@ -1,11 +1,16 @@
 #!/bin/bash
 
-# Wait for Argo CD to be ready
-kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=9000s deployment/argocd-server -n argocd
 
-# Get Argo CD admin password
-ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-echo "Argo CD Admin Password: $ARGOCD_PASSWORD"
+ARGOCD_PASS=$(kubectl get secret argocd-initial-admin-secret -n argocd -o yaml | grep pass | awk '{print $2}' | base64 -d)
 
-# Apply the Argo CD application
-kubectl apply -f ../confs/argocd-app.yaml
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+log 0 "${GREEN}ArgoCD and application ready to use${NC}"
+echo ""
+log 0 "  ➜  Local:\t${GREEN}http://localhost:9999/${NC}"
+log 0 "  ➜  user:\t${GREEN}admin${NC}"
+log 0 "  ➜  password:\t${GREEN}$ARGOCD_PASS${NC}"
+
+kubectl port-forward -n argocd svc/argocd-server 9999:443
